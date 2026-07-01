@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能花盆市场调研卡片库</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f2ed;
+      --surface: #ffffff;
+      --surface-soft: #f8f6f2;
+      --primary: #3d7a5a;
+      --primary-dark: #2a5841;
+      --accent: #c4a96b;
+      --text: #2c3e2d;
+      --text-secondary: #637464;
+      --border: #d4cdc4;
+      --shadow: 0 8px 28px rgba(61, 122, 90, 0.08);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Noto Sans SC", sans-serif;
+      background:
+        radial-gradient(circle at 10% 5%, rgba(61, 122, 90, 0.08), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(196, 169, 107, 0.14), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .hero {
+      background: linear-gradient(140deg, #edf4ef 0%, #f7f3ea 50%, #eee8dd 100%);
+      border: 1px solid rgba(61, 122, 90, 0.18);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 34px 30px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -70px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(61, 122, 90, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-family: "Noto Serif SC", serif;
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      line-height: 1.25;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      max-width: 860px;
+      margin-bottom: 14px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 5px 16px rgba(61, 122, 90, 0.24);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 390px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(61, 122, 90, 0.14);
+    }
+
+    .card-media {
+      border-bottom: 1px dashed var(--border);
+      position: relative;
+      overflow: hidden;
+      background: var(--surface-soft);
+      aspect-ratio: 3 / 2;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .img-placeholder {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(61, 122, 90, 0.08), rgba(196, 169, 107, 0.12)),
+        var(--surface-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .card-content {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .category {
+      display: inline-block;
+      background: rgba(61, 122, 90, 0.1);
+      color: var(--primary-dark);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .relevance {
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    .name {
+      font-size: 18px;
+      line-height: 1.35;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .desc {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .kv {
+      border-top: 1px solid rgba(212, 205, 196, 0.6);
+      padding-top: 10px;
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .kv b {
+      color: var(--text);
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .actions {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+    }
+
+    .tag {
+      background: #f3efe7;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .link-btn {
+      text-decoration: none;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .link-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.6);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: 94vw;
+        padding-top: 18px;
+      }
+
+      .hero {
+        padding: 24px 18px;
+        border-radius: 18px;
+      }
+
+      .card {
+        min-height: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="hero-badge">Smart Planter Research</span>
+      <h1>桌面智能花盆市场调研卡片库</h1>
+      <p>参考你的产品方案页面视觉风格，整理为可视化竞品卡片。当前共 47 款产品，每个产品单独方格，桌面端两列展示，后续可直接补充图片并继续扩展字段。</p>
+      <div class="meta">
+        <span class="chip">展示结构：两列卡片</span>
+        <span class="chip">产品总数：47</span>
+        <span class="chip">更新时间：2026-04-22</span>
+        <span class="chip">图片状态：已填充（30款）</span>
+      </div>
+    </section>
+
+    <section class="toolbar" id="toolbar"></section>
+    <section class="cards-grid" id="cardsGrid"></section>
+
+    <section class="footer-note">
+      备注：图片暂为占位区域，等你我后续爬取后可替换为真实图。替换方式可采用每个产品配置 imageUrl 字段并自动渲染。
+    </section>
+  </main>
+
+  <script>
+    const products = [
+      { id: 1, category: "成熟", name: "Click and Grow Smart Garden 3", desc: "入门级智能花园", highlight: "自动浇水、传感器、LED、胶囊种植", position: "家庭量产主流", relevance: "高（5/5）", bias: "消费级家用", link: "https://clickandgrow.com/products/the-smart-garden-3" },
+      { id: 2, category: "成熟", name: "Click and Grow Smart Garden 9", desc: "9株容量家用主力", highlight: "大水箱、LED、App监控", position: "家庭进阶", relevance: "高（5/5）", bias: "消费级家用", link: "https://clickandgrow.com/products/the-smart-garden-9" },
+      { id: 3, category: "成熟", name: "Click and Grow Smart Garden 9 Pro", desc: "9株专业版", highlight: "可调光谱、精细控制", position: "高端家用", relevance: "高（4/5）", bias: "消费级家用", link: "https://clickandgrow.com/products/the-smart-garden-9-pro" },
+      { id: 4, category: "成熟", name: "AeroGarden Harvest Elite 360", desc: "美国经典室内水培机", highlight: "水培、LED、自动施肥", position: "大众家庭与厨房场景", relevance: "高（5/5）", bias: "消费级家用", link: "https://www.aerogarden.com/" },
+      { id: 5, category: "成熟", name: "一米田智能种植伴侣", desc: "国产智能种植设备", highlight: "土壤监测、自动浇水、补光、米家App", position: "国内家庭性价比", relevance: "高（4/5）", bias: "消费级家用", link: "https://post.smzdm.com/p/AXP6E2P7/" },
+      { id: 6, category: "成熟", name: "Nimbus 智能花盆", desc: "长续航智能花盆", highlight: "一次加水可用约4个月", position: "懒人/低维护", relevance: "中（3/5）", bias: "娱乐陪伴", link: "https://www.toutiao.com/t-7548532098530887180/" },
+      { id: 7, category: "众筹", name: "OGarden Smart", desc: "旋转式智能室内花园", highlight: "旋转结构、10株、水培+土培", position: "家庭可视化种植", relevance: "高（4/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/ogarden/smart-indoor-garden" },
+      { id: 8, category: "众筹", name: "LeafyPod", desc: "自浇水智能花盆", highlight: "传感器、App连接", position: "小型桌面场景", relevance: "中（3/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/leafypod/self-watering-smart-planter" },
+      { id: 9, category: "众筹", name: "OASImart Eco Modular Planter", desc: "可持续模块化花盆", highlight: "模块拼接、环保材料", position: "环保生活方式", relevance: "中（3/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/oasinetwork/eco-sustainable-modular-smart-planter" },
+      { id: 10, category: "众筹", name: "Ark Smart Planter", desc: "桌面自动化绿洲", highlight: "自动浇灌、App控制", position: "桌面美学+自动化", relevance: "高（4/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/plantelligence-ark/ark-smart-planter-your-personal-automated-desktop-oasis" },
+      { id: 11, category: "众筹", name: "Modular Smart Garden Suite", desc: "可扩展花园套件", highlight: "模块化扩展", position: "家庭可成长系统", relevance: "中（3/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/1274201443/modular-smart-garden-suite" },
+      { id: 12, category: "众筹", name: "iZestee", desc: "桌面气培种植器", highlight: "气培技术、生长更快", position: "技术创新桌面设备", relevance: "高（5/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/izestee/the-worlds-first-desktop-smart-aeroponic-plant-cultivator" },
+      { id: 13, category: "众筹", name: "The Smart Garden", desc: "室内自产食物方案", highlight: "简化自给种植", position: "健康食品导向", relevance: "中（3/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/mattiaslepp/the-smart-garden-your-solution-for-better-food" },
+      { id: 14, category: "众筹", name: "Nano Garden", desc: "法国微型水培花园", highlight: "小体积、设计感", position: "都市小户型", relevance: "高（4/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/pretapousser/nano-garden-by-pret-a-pousser" },
+      { id: 15, category: "众筹", name: "Strollberry", desc: "可移动智能花园", highlight: "底部轮子、灵活摆放", position: "移动场景种植", relevance: "中（3/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/strollberry/strollberry-your-movable-smart-garden" },
+      { id: 16, category: "众筹", name: "Urbi", desc: "交互式室内种植站", highlight: "互动反馈、传感器", position: "人植互动体验", relevance: "高（4/5）", bias: "娱乐陪伴", link: "https://www.kickstarter.com/projects/1463957959/urbi-an-interactive-indoor-gardening-station" },
+      { id: 17, category: "众筹", name: "Harvst H-Series", desc: "全自动室内花园", highlight: "自动灌溉、补光、施肥", position: "高自动化家用设备", relevance: "高（5/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/harvst/harvst-h-series-automated-indoor-garden" },
+      { id: 18, category: "众筹", name: "Multo", desc: "厨房农场系统", highlight: "高端水培、厨房场景", position: "欧洲高端家庭市场", relevance: "高（5/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/pretapousser/multo-your-own-kitchen-farm" },
+      { id: 19, category: "众筹", name: "Totam Planter", desc: "模块化自动浇水花盆", highlight: "组合自由、分区管理", position: "多盆植物用户", relevance: "高（4/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/totamplanter/totam-planter-modular-automated-self-watering" },
+      { id: 20, category: "众筹", name: "Hydropote 2.0", desc: "可3D打印自浇水花盆", highlight: "开源DIY、低成本", position: "创客教育与兴趣圈", relevance: "中（3/5）", bias: "DIY创客", link: "https://www.kickstarter.com/projects/bloomfab/hydropote-20-another-diy-self-watering-pot-to-3d-print" },
+      { id: 21, category: "众筹", name: "Geodrops", desc: "AI精准灌溉系统", highlight: "智能土壤传感、节水", position: "精准灌溉技术验证", relevance: "高（4/5）", bias: "专业种植（ToB）", link: "https://www.kickstarter.com/projects/homedigy/geodrops-precision-irrigation-with-ai-smart-soil-sensor" },
+      { id: 22, category: "众筹", name: "TerraPlanter Tile", desc: "瓷砖化无土种植模块", highlight: "墙面垂直种植", position: "家居装置化产品", relevance: "中（3/5）", bias: "娱乐陪伴", link: "https://www.kickstarter.com/projects/terraplanter/tile" },
+      { id: 23, category: "众筹", name: "Walty 2.0", desc: "家用自动浇花设备", highlight: "简易安装、自动浇水", position: "家庭基础自动化", relevance: "中（3/5）", bias: "消费级家用", link: "https://www.kickstarter.com/projects/walty/walty-20" },
+      { id: 24, category: "众筹", name: "SproutsIO", desc: "紧凑型桌面水培", highlight: "小体积、App控制", position: "公寓桌面种植", relevance: "中（3/5）", bias: "消费级家用", link: "https://www.indiegogo.com" },
+      { id: 25, category: "众筹", name: "HerbaSmart", desc: "国内草本智能种植", highlight: "语音提醒、模块扩展", position: "厨房香草场景", relevance: "中（3/5）", bias: "消费级家用", link: "https://zc.tmall.com" },
+      { id: 26, category: "众筹", name: "BitGarden / 智能盆栽后花园", desc: "国内早期众筹尝试", highlight: "中国早期样本价值", position: "历史参考", relevance: "低（2/5）", bias: "概念探索", link: "https://www.bing.com/search?q=BitGarden+%E6%99%BA%E8%83%BD%E7%9B%86%E6%A0%BD+%E5%90%8E%E8%8A%B1%E5%9B%AD" },
+      { id: 27, category: "概念", name: "LeafyPod AI智能花盆", desc: "AI让植物发声", highlight: "人植交互、状态表达", position: "前沿交互方向", relevance: "高（4/5）", bias: "概念探索", link: "https://www.163.com/dy/article/JJ9F4U5M05569TFV.html" },
+      { id: 28, category: "概念", name: "IKEA概念智能花盆", desc: "北欧家居化概念花盆", highlight: "内置灌溉、极简设计", position: "家居融合路线", relevance: "高（4/5）", bias: "概念探索", link: "https://www.ikea.com" },
+      { id: 29, category: "概念", name: "Bosch Smart Gardening Concept", desc: "Bosch园艺概念系统", highlight: "摄像头+AI病害识别", position: "技术展示/B2B延展", relevance: "高（4/5）", bias: "专业种植（ToB）", link: "https://www.bing.com/search?q=Bosch+Smart+Gardening+Concept" },
+      { id: 30, category: "概念", name: "Planty AI交互概念", desc: "设计工作室前瞻方案", highlight: "全息监测、情感交互", position: "未来城市农业叙事", relevance: "中（3/5）", bias: "概念探索", link: "https://www.behance.net" },
+      { id: 31, category: "概念", name: "情绪交互智能花盆（概念）", desc: "情绪反馈型花盆", highlight: "LED表情、声音提示", position: "年轻用户陪伴型", relevance: "中（3/5）", bias: "娱乐陪伴", link: "https://www.bing.com/search?q=%E6%83%85%E7%BB%AA%E4%BA%A4%E4%BA%92+%E6%99%BA%E8%83%BD%E8%8A%B1%E7%9B%86" },
+      { id: 32, category: "专业", name: "AeroFarms垂直农场系统", desc: "商业化垂直农业系统", highlight: "光配方、IoT闭环", position: "大规模商业农场", relevance: "中（3/5）", bias: "专业种植（ToB）", link: "https://www.aerofarms.com" },
+      { id: 33, category: "专业", name: "Plenty垂直农业", desc: "城市化垂直种植方案", highlight: "AI优化、高密度生产", position: "新型城市农业", relevance: "中（3/5）", bias: "专业种植（ToB）", link: "https://www.plenty.com" },
+      { id: 34, category: "专业", name: "Bowery Farming", desc: "智能垂直农业公司", highlight: "自动化采收、LED", position: "高端供应链农业", relevance: "中（3/5）", bias: "专业种植（ToB）", link: "https://boweryfarming.com" },
+      { id: 35, category: "专业", name: "CropX土壤监测灌溉系统", desc: "传感+算法灌溉平台", highlight: "土壤数据驱动决策", position: "商业农场SaaS", relevance: "高（4/5）", bias: "专业种植（ToB）", link: "https://www.cropx.com" },
+      { id: 36, category: "专业", name: "Netafim智能滴灌系统", desc: "全球滴灌标杆方案", highlight: "滴灌、水肥一体、IoT", position: "农业基础设施龙头", relevance: "中（3/5）", bias: "专业种植（ToB）", link: "https://www.netafim.com" },
+      { id: 37, category: "专业", name: "HortiMaX温室控制方案", desc: "温室灌溉控制系统", highlight: "多区控制、策略引擎", position: "欧洲温室标准路径", relevance: "中（3/5）", bias: "专业种植（ToB）", link: "https://www.hortimax.com" },
+      { id: 38, category: "专业", name: "米家自动浇花系统（DIY/半专业）", desc: "家庭多盆自动浇水方案", highlight: "电磁阀+水泵、米家联动", position: "家庭半专业改造", relevance: "高（4/5）", bias: "DIY创客", link: "https://www.bilibili.com/video/BV1FJ411s9/" },
+      { id: 39, category: "娱乐", name: "STM32智能花盆（DIY）", desc: "学生/极客自制方案", highlight: "传感监测、自动浇水、IoT", position: "教学与开源实践", relevance: "中（3/5）", bias: "DIY创客", link: "https://www.bilibili.com/video/BV1sT4y1E7Qm/" },
+      { id: 40, category: "娱乐", name: "SmartPlantV1", desc: "GitHub开源3D打印花盆", highlight: "Arduino、自动浇水", position: "创客入门项目", relevance: "中（3/5）", bias: "DIY创客", link: "https://github.com/DIY-Machines/SmartPlantV1" },
+      { id: 41, category: "娱乐", name: "GrowCube智能浇灌系统", desc: "分仓浇灌设备", highlight: "分区控制、ESPHome兼容", position: "多盆管理用户", relevance: "中（3/5）", bias: "DIY创客", link: "https://github.com/MakersFunDuck/ESPhome-port-for-GrowCube-Plant-Watering-System" },
+      { id: 42, category: "娱乐", name: "M5Stack智能植物浇水项目", desc: "开源物联网浇水项目", highlight: "WiFi上报、传感监测", position: "技术学习项目", relevance: "中（3/5）", bias: "DIY创客", link: "https://github.com/kernelcontrol/m5stack-smart-plant-watering" },
+      { id: 43, category: "娱乐", name: "智能花盆App（软件类）", desc: "硬件配套App形态", highlight: "提醒推送、状态可视化", position: "软件生态补充", relevance: "中（2/5）", bias: "娱乐陪伴", link: "https://www.edo163.net/yunlove/15655.html" },
+      { id: 44, category: "娱乐", name: "情绪智能花盆（在售）", desc: "情感化互动花盆", highlight: "LED表情反馈", position: "年轻用户礼品化", relevance: "中（2/5）", bias: "娱乐陪伴", link: "https://www.toutiao.com/t-7548532098530887180/" },
+      { id: 45, category: "娱乐", name: "可乐瓶/矿泉水瓶自动浇水装置", desc: "极低成本自动浇水法", highlight: "毛细管虹吸、无电", position: "临时托管/入门", relevance: "低（2/5）", bias: "DIY创客", link: "https://sogou.com/web?query=%E5%8F%AF%E4%B9%90%E7%93%B6%E8%87%AA%E5%8A%A8%E6%B5%87%E6%B0%B4%E8%A3%85%E7%BD%AE" },
+      { id: 46, category: "娱乐", name: "植物智能检测棒", desc: "现有花盆智能升级件", highlight: "湿度检测、蓝牙连接", position: "低门槛增购配件", relevance: "高（3/5）", bias: "消费级家用", link: "https://www.bing.com/search?q=%E6%A4%8D%E7%89%A9%E6%99%BA%E8%83%BD%E6%A3%80%E6%B5%8B%E6%A3%92" },
+      { id: 47, category: "娱乐", name: "homebridge-smart-irrigation", desc: "HomeKit智能灌溉插件", highlight: "Siri语音控制、家庭自动化", position: "智能家居玩家", relevance: "中（3/5）", bias: "DIY创客", link: "https://github.com/MTry/homebridge-smart-irrigation" }
+    ];
+
+    const imageMap = {
+      1: "https://www.clickandgrow.com/cdn/shop/files/sg3-white-1-nw25.jpg?v=1775568213&width=1200",
+      2: "https://www.clickandgrow.com/cdn/shop/files/sg9-white-1-nw25.jpg?v=1766478611&width=1200",
+      3: "https://www.clickandgrow.com/cdn/shop/files/sg9-pro-grey-1-nw25.jpg?v=1766478611&width=1200",
+      8: "https://i.kickstarter.com/assets/046/976/808/7c62ce015fbc14d672aee4eaac80c181_original.jpg",
+      9: "https://i.kickstarter.com/assets/042/939/771/ff8dc39ce99cecdfa3e9b22a6b3c3ecc_original.jpg",
+      10: "https://i.kickstarter.com/assets/050/600/919/2a18fbf65e9fc8321b082006856b6286_original.jpg",
+      11: "https://i.kickstarter.com/assets/052/059/849/2aad07f140bb8e3905861fb9c8cdc4a6_original.JPG",
+      12: "https://i.kickstarter.com/assets/052/227/193/54fec7ee34840f0767444a957b2525c8_original.png",
+      13: "https://i.kickstarter.com/assets/014/344/938/60525940ec5d58ad1e2ac22a3b90a0f8_original.jpg",
+      14: "https://i.kickstarter.com/assets/033/402/366/eee2c7a272eda202dad2ca6c7a67212f_original.jpg",
+      15: "https://i.kickstarter.com/assets/051/915/181/73b4d4fd373154cb079d4c2702169684_original.png",
+      16: "https://i.kickstarter.com/assets/047/363/780/524910c2fcdf75406bc2b91516eef011_original.png",
+      17: "https://i.kickstarter.com/assets/042/498/903/07951c2b4421e61e3d0879a2968afb86_original.jpg",
+      18: "https://i.kickstarter.com/assets/037/464/827/409dd70c8e1de374d59ec166db03fe84_original.jpg",
+      19: "https://i.kickstarter.com/assets/040/343/219/e3e53979d349196d2dd8201598b8ad73_original.png",
+      20: "https://i.kickstarter.com/assets/047/459/115/496f2bf5f96e01e4f2045b6eb76a79e6_original.png",
+      21: "https://i.kickstarter.com/assets/045/295/906/2fdccf74b9b0d629ec29f8f6a9aa8f24_original.jpg",
+      22: "https://i.kickstarter.com/assets/047/193/635/5eb24a4badb8f48a36ec9e62e4797e25_original.png",
+      23: "https://i.kickstarter.com/assets/046/024/593/7e91f277e506d591a3d8e55014f2551f_original.png",
+      27: "https://i.kickstarter.com/assets/046/976/808/7c62ce015fbc14d672aee4eaac80c181_original.jpg",
+      28: "https://www.ikea.com/global/en/media/PE_1007832_1be8bc3944.jpg?f=xxxl",
+      30: "https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/a3e5bb233235771.Y3JvcCwxMTM2LDg4OSwxMzIsMA.png",
+      32: "https://www.aerofarms.com/wp-content/uploads/2024/11/b-corp-team-540x585-1.webp",
+      33: "https://www.plenty.com/images/brands/plenty-logo-splash.png?&format=webp&v=20250218",
+      34: "https://boweryfarming.com/wp-content/uploads/2021/03/Modern-farmer-site-grid.gif",
+      36: "https://www.netafim.com/cdn-cgi/image/format=auto,fit=crop,quality=80,width=1500/globalassets/digital-farming/digital_farming_v3.jpg?v=4920b3",
+      40: "https://opengraph.githubassets.com/1/DIY-Machines/SmartPlantV1",
+      41: "https://opengraph.githubassets.com/1/MakersFunDuck/ESPhome-port-for-GrowCube-Plant-Watering-System",
+      42: "https://opengraph.githubassets.com/1/kernelcontrol/m5stack-smart-plant-watering",
+      47: "https://opengraph.githubassets.com/1/MTry/homebridge-smart-irrigation"
+    };
+
+    const categories = ["全部", "成熟", "众筹", "概念", "专业", "娱乐"];
+    const toolbar = document.getElementById("toolbar");
+    const cardsGrid = document.getElementById("cardsGrid");
+
+    function createFilterButtons() {
+      categories.forEach((cat, index) => {
+        const btn = document.createElement("button");
+        btn.className = "filter-btn" + (index === 0 ? " active" : "");
+        btn.textContent = cat;
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderCards(cat);
+        });
+        toolbar.appendChild(btn);
+      });
+    }
+
+    function renderCards(filter) {
+      cardsGrid.innerHTML = "";
+      const list = filter === "全部" ? products : products.filter((item) => item.category === filter);
+
+      list.forEach((item) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        const imageUrl = imageMap[item.id];
+
+        const mediaHtml = imageUrl
+          ? `<div class="card-media"><img src="${imageUrl}" alt="${item.name} 产品图" loading="lazy" referrerpolicy="no-referrer"></div>`
+          : `<div class="card-media"><div class="img-placeholder">图片待补充 · ${item.name}</div></div>`;
+
+        card.innerHTML = `
+          ${mediaHtml}
+          <div class="card-content">
+            <div class="card-top">
+              <span class="category">${item.category}</span>
+              <span class="relevance">相关度：${item.relevance}</span>
+            </div>
+            <h2 class="name">${item.id}. ${item.name}</h2>
+            <p class="desc">${item.desc}</p>
+            <div class="kv">
+              <div><b>亮点：</b>${item.highlight}</div>
+              <div><b>定位：</b>${item.position}</div>
+            </div>
+            <div class="actions">
+              <span class="tag">方向：${item.bias}</span>
+              <a class="link-btn" href="${item.link}" target="_blank" rel="noopener noreferrer">打开链接</a>
+            </div>
+          </div>
+        `;
+
+        if (imageUrl) {
+          const img = card.querySelector("img");
+          img.addEventListener("error", () => {
+            const media = img.parentElement;
+            media.innerHTML = `<div class="img-placeholder">图片加载失败 · ${item.name}</div>`;
+          });
+        }
+
+        cardsGrid.appendChild(card);
+      });
+    }
+
+    createFilterButtons();
+    renderCards("全部");
+  </script>
+</body>
+</html>

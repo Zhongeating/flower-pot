@@ -1,0 +1,9 @@
+.vscode/
+.agents/
+.venv/
+_archive/
+__pycache__/
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db

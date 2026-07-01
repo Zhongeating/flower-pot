@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>植间 PlantSpace · V4 产品方案汇报</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f2ed;
+  --surface: #fffdf8;
+  --surface-soft: #faf7f0;
+  --primary: #3d7a5a;
+  --primary-light: #6aa883;
+  --primary-dark: #2a5841;
+  --accent: #c4a96b;
+  --accent-soft: #eadbb7;
+  --text: #2c3e2d;
+  --muted: #6b7c6c;
+  --line: #d8d0c5;
+  --danger: #b65a52;
+  --warn: #a9843d;
+  --radius: 14px;
+  --shadow: 0 10px 36px rgba(61, 122, 90, 0.10);
+  --max: 1160px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.72;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  background: rgba(245, 242, 237, 0.90);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(61, 122, 90, 0.12);
+}
+nav .inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  height: 58px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2px; list-style: none; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: 0.2s ease;
+}
+.nav-links a:hover { background: var(--primary); color: #fff; }
+.progress {
+  position: fixed;
+  top: 58px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  z-index: 60;
+}
+.slide {
+  min-height: 100vh;
+  padding: 92px 30px 64px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-bottom: 1px solid rgba(61, 122, 90, 0.10);
+}
+.slide:nth-of-type(odd) { background: linear-gradient(145deg, #f5f2ed 0%, #f8f5ee 100%); }
+.slide:nth-of-type(even) { background: linear-gradient(145deg, #f2efe8 0%, #f8f5ee 100%); }
+.container {
+  max-width: var(--max);
+  width: 100%;
+  margin: 0 auto;
+}
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.kicker::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+h1, h2, h3 {
+  font-family: 'Noto Serif SC', serif;
+  color: var(--primary-dark);
+  line-height: 1.24;
+}
+h1 {
+  font-size: clamp(3.1rem, 7vw, 6rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 18px;
+}
+h1 em { color: var(--accent); font-style: normal; }
+h2 {
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  max-width: 940px;
+  margin-bottom: 18px;
+}
+h3 { font-size: 1.15rem; margin-bottom: 8px; }
+.lead {
+  font-size: clamp(1.02rem, 1.5vw, 1.24rem);
+  color: var(--muted);
+  max-width: 820px;
+  font-weight: 300;
+  margin-bottom: 34px;
+}
+.hero {
+  text-align: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 55% 45% at 50% 64%, rgba(90, 158, 120, 0.12), transparent 68%),
+    linear-gradient(160deg, #e8f0ea 0%, #f5f2ed 46%, #ede8dc 100%);
+}
+.hero .container { max-width: 900px; }
+.hero-with-image .container { max-width: var(--max); }
+.hero-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 42px; align-items: center; text-align: left; }
+.hero-copy .tags { justify-content: flex-start; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 16px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 28px;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 30px; }
+.tag {
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: rgba(255, 253, 248, 0.72);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+.image-frame {
+  background: var(--surface);
+  border: 1px solid rgba(61, 122, 90, 0.10);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.image-frame img { width: 100%; height: auto; object-fit: cover; display: block; }
+.image-frame.hero-product img,
+.image-frame.scene img,
+.image-frame.visual-shot img,
+.image-frame.product-image img { aspect-ratio: 1 / 1; object-fit: contain; background: #fffaf0; }
+.flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  align-items: stretch;
+  margin-top: 36px;
+}
+.flow-step {
+  background: var(--surface);
+  border: 1px solid rgba(61, 122, 90, 0.10);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.flow-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  font-weight: 700;
+  z-index: 2;
+}
+.flow-step strong { display: block; color: var(--primary-dark); font-size: 1rem; margin-bottom: 6px; }
+.flow-step span { color: var(--muted); font-size: 0.84rem; }
+.flow-step.hot { border-color: rgba(196, 169, 107, 0.5); background: #fffaf0; }
+.overview-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 30px;
+}
+.overview-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-height: 240px;
+  position: relative;
+}
+.overview-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.image-overlay-text {
+  position: absolute;
+  left: 16px; right: 16px; bottom: 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(38, 64, 44, 0.72);
+  color: #fff;
+}
+.image-overlay-text h3 { color: #fff; margin: 0; font-size: 1rem; }
+.market-intersection {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr 1fr;
+  gap: 20px;
+  align-items: center;
+  margin-top: 30px;
+}
+.market-card, .intersection-card, .panel, .definition-card, .module-item, .route-step, .action, .stage-card, .criteria-card {
+  background: var(--surface);
+  border: 1px solid rgba(61, 122, 90, 0.12);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.market-card { padding: 28px; min-height: 245px; }
+.market-card .num { font-family: 'Noto Serif SC', serif; font-size: clamp(2.8rem, 6vw, 5.2rem); line-height: 1; color: var(--primary); font-weight: 700; }
+.market-card .label { color: var(--muted); font-weight: 600; margin-top: 12px; }
+.market-card ul, .panel ul { margin-left: 18px; color: var(--muted); }
+.intersection-card { padding: 30px 24px; text-align: center; background: #fffaf0; border-color: rgba(196, 169, 107, 0.55); }
+.intersection-card strong { display: block; font-family: 'Noto Serif SC', serif; color: var(--primary-dark); font-size: 1.35rem; margin-bottom: 12px; }
+.note { color: var(--muted); font-size: 0.88rem; margin-top: 18px; }
+.scene-layout, .visual-layout, .definition-layout, .system-map, .two-col, .compare-grid, .stage-grid, .criteria-grid, .final-actions {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+}
+.scene-layout { grid-template-columns: 1.05fr 0.95fr; }
+.visual-layout { grid-template-columns: 0.9fr 1.1fr; }
+.visual-layout.reverse { grid-template-columns: 1fr 0.95fr; }
+.trust-layout { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 26px; align-items: stretch; margin-top: 26px; }
+.trust-layout .visual-shot img { height: 100%; min-height: 430px; }
+.trust-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 18px; height: 100%; }
+.trust-stack .panel { display: flex; flex-direction: column; justify-content: center; }
+.scene-text-stack { display: grid; gap: 18px; }
+.panel { padding: 24px; }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.table th, .table td {
+  border-bottom: 1px solid var(--line);
+  padding: 13px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+.table th { color: var(--primary-dark); background: #f7f2e5; font-weight: 700; }
+.table td { color: var(--muted); }
+.table tr:last-child td { border-bottom: none; }
+.compact-table th, .compact-table td { padding: 10px 12px; font-size: 0.92rem; }
+.path-diagram { margin-top: 28px; }
+.path-canopy { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.path-branch {
+  background: var(--surface);
+  border: 1px solid rgba(61, 122, 90, 0.12);
+  border-radius: 22px 22px var(--radius) var(--radius);
+  box-shadow: var(--shadow);
+  padding: 26px 28px;
+}
+.path-branch.growth { border-top: 5px solid var(--primary-light); }
+.path-branch.calm { border-top: 5px solid var(--accent); }
+.eyebrow { color: var(--muted); font-weight: 700; letter-spacing: 0.12em; font-size: 0.72rem; margin-bottom: 10px; }
+.path-stem { width: 4px; height: 34px; background: var(--primary-light); margin: 0 auto; }
+.base-block {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 22px 26px;
+  border-radius: var(--radius);
+  background: var(--primary-dark);
+  color: #fff;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.base-block strong { display: block; font-size: 1.1rem; }
+.base-block span { display: block; opacity: 0.8; font-size: 0.9rem; margin-top: 6px; }
+.user-layout { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 26px; align-items: center; margin-top: 26px; }
+.user-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 26px; }
+.user-rings { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; align-items: center; }
+.user-rings .user-card { aspect-ratio: 1 / 1; min-height: 0; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 18px; }
+.user-rings .user-card:nth-child(1) { grid-column: 2 / span 2; }
+.user-rings .user-card:nth-child(2) { grid-column: 4 / span 2; }
+.user-rings .user-card:nth-child(3) { grid-column: 1 / span 2; }
+.user-rings .user-card:nth-child(4) { grid-column: 3 / span 2; }
+.user-rings .user-card:nth-child(5) { grid-column: 5 / span 2; }
+.user-card { background: var(--surface); border: 1px solid rgba(61, 122, 90, 0.12); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); min-height: 145px; }
+.user-card b { display: block; color: var(--primary-dark); margin-bottom: 8px; }
+.user-card span { color: var(--muted); font-size: 0.86rem; line-height: 1.45; }
+.user-result { margin: 22px auto 0; padding: 16px 20px; max-width: 760px; border-radius: 999px; text-align: center; background: var(--primary); color: #fff; font-weight: 700; }
+.pain-chain { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 30px; }
+.pain-item { padding: 22px 18px; border-radius: var(--radius); background: var(--surface); border: 1px solid rgba(182, 90, 82, 0.18); box-shadow: var(--shadow); position: relative; }
+.pain-item:not(:last-child)::after { content: '→'; position: absolute; right: -14px; top: 50%; transform: translateY(-50%); color: var(--danger); font-weight: 700; }
+.pain-item b { color: var(--danger); display: block; margin-bottom: 6px; }
+.pain-item span { color: var(--muted); font-size: 0.88rem; }
+.viz-note { color: var(--muted); font-size: 0.92rem; margin-top: 18px; }
+.definition-layout { grid-template-columns: 1fr 1fr; }
+.definition-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.definition-card { padding: 24px; min-height: 148px; }
+.definition-card .word { font-family: 'Noto Serif SC', serif; font-size: 1.7rem; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+.definition-card p { color: var(--muted); }
+.system-map { grid-template-columns: 0.95fr 1.05fr; }
+.product-photo img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #fffaf0; border-radius: 24px; }
+.module-list { display: grid; gap: 14px; }
+.module-item { padding: 18px 20px; display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: center; }
+.module-item b { color: var(--primary-dark); }
+.module-item span { color: var(--muted); }
+.two-col { grid-template-columns: 1fr 1fr; }
+.two-col .panel { height: 100%; }
+.two-col .panel > p:last-child { margin-bottom: 0; }
+.compare-grid { grid-template-columns: 1fr 1fr; }
+.compare-card { position: relative; }
+.compare-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #fffaf0; display: block; }
+.compare-label {
+  position: absolute;
+  left: 16px; right: 16px; bottom: 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(38, 64, 44, 0.76);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.stage-grid { grid-template-columns: repeat(4, 1fr); margin-top: 26px; align-items: stretch; }
+.stage-card { padding: 22px 18px; position: relative; }
+.stage-card.current { background: #fffaf0; border-color: rgba(196, 169, 107, 0.55); }
+.stage-card h3 { font-size: 1.15rem; }
+.stage-card p { color: var(--muted); font-size: 0.9rem; margin-top: 8px; }
+.criteria-grid { grid-template-columns: repeat(5, 1fr); margin-top: 26px; }
+.criteria-card { padding: 20px 16px; min-height: 150px; }
+.criteria-card b { color: var(--primary-dark); display: block; margin-bottom: 8px; }
+.criteria-card span { color: var(--muted); font-size: 0.88rem; }
+.route { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+.route-step { padding: 22px 18px; min-height: 145px; }
+.route-step strong { display: block; color: var(--primary-dark); margin-bottom: 8px; }
+.route-step span { color: var(--muted); font-size: 0.9rem; }
+.footer-note { background: var(--primary-dark) !important; color: #fff; text-align: center; }
+.footer-note h2, .footer-note h3 { color: #fff; }
+.footer-center { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.footer-center .kicker { align-self: center; }
+.footer-center h2 { max-width: none; width: 100%; text-align: center; }
+.footer-note .lead { color: rgba(255,255,255,0.78); margin-left: auto; margin-right: auto; }
+.final-actions { grid-template-columns: repeat(4, 1fr); margin-top: 30px; }
+.action { padding: 24px 20px; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.14); box-shadow: none; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.action .num { color: var(--accent); font-weight: 700; font-size: 1.6rem; margin-bottom: 10px; }
+.action p { color: rgba(255,255,255,0.78); font-size: 0.9rem; margin-top: 8px; }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+@media (max-width: 980px) {
+  nav .inner { padding: 0 18px; }
+  .nav-links { display: none; }
+  .slide { padding: 82px 18px 54px; }
+  .hero-layout, .market-intersection, .scene-layout, .visual-layout, .visual-layout.reverse, .definition-layout, .system-map, .two-col, .user-layout, .trust-layout { grid-template-columns: 1fr; }
+  .flow, .overview-cards, .path-canopy, .user-cards, .user-rings, .pain-chain, .stage-grid, .criteria-grid, .route, .final-actions, .definition-stack { grid-template-columns: 1fr; }
+  .user-rings .user-card { grid-column: auto !important; border-radius: var(--radius); aspect-ratio: auto; min-height: 128px; }
+  .trust-layout .visual-shot img { min-height: 0; height: auto; }
+  .flow-step:not(:last-child)::after, .pain-item:not(:last-child)::after { content: none; }
+  .module-item { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="inner">
+    <a class="logo" href="#cover">植间 <span>PlantSpace</span></a>
+    <ul class="nav-links">
+      <li><a href="#market">市场</a></li>
+      <li><a href="#scene">场景</a></li>
+      <li><a href="#task">任务</a></li>
+      <li><a href="#user">用户</a></li>
+      <li><a href="#product">方案</a></li>
+      <li><a href="#mvp">验证</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="progress" id="progress"></div>
+
+<section class="slide hero hero-with-image" id="cover">
+  <div class="container reveal hero-layout">
+    <div class="hero-copy">
+      <span class="badge">目标用户与关键假设验证阶段</span>
+      <h1>植间 <em>PlantSpace</em></h1>
+      <p class="lead">在桌面上让植物自由生长的空间</p>
+      <div class="tags">
+        <span class="tag">室内桌面</span>
+        <span class="tag">开花植物</span>
+        <span class="tag">可见成长</span>
+        <span class="tag">低精力养护</span>
+        <span class="tag">轻交互</span>
+      </div>
+    </div>
+    <div class="image-frame hero-product">
+      <img src="../../06_素材资源/产品视觉/pic/场景/植间产品概念图20.png" alt="植间桌面植物系统产品海报">
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="overview">
+  <div class="container reveal">
+    <div class="kicker">Overview</div>
+    <h2>从“想在桌上养植物”到“在桌上照顾好自己的植物”</h2>
+    <p class="lead">需验证植间是否值得继续投入。</p>
+    <div class="flow">
+      <div class="flow-step"><strong>真实植物消费广泛</strong><span>用户已经购买花卉与盆栽</span></div>
+      <div class="flow-step"><strong>桌面体验被经营</strong><span>桌搭、灯具、摆件等持续付费</span></div>
+      <div class="flow-step"><strong>开花植物难留桌面</strong><span>弱光、判断、维护和精力消耗</span></div>
+      <div class="flow-step"><strong>植间低精力系统</strong><span>保活、成长、低打扰记录</span></div>
+      <div class="flow-step hot"><strong>验证阶段</strong><span>目标用户、保活、成长、付费</span></div>
+    </div>
+    <div class="overview-cards">
+      <div class="overview-card image-overlay-card">
+        <img src="../../06_素材资源/产品视觉/pic/阳台花园01.png" alt="真实植物消费场景">
+        <div class="image-overlay-text"><h3>想拥有真实植物</h3></div>
+      </div>
+      <div class="overview-card image-overlay-card">
+        <img src="../../06_素材资源/产品视觉/pic/场景/植间产品概念图16.png" alt="桌面环境限制场景">
+        <div class="image-overlay-text"><h3>桌面条件和精力受限</h3></div>
+      </div>
+      <div class="overview-card image-overlay-card">
+        <img src="../../06_素材资源/产品视觉/pic/场景/植间产品概念图18.png" alt="低精力照顾植物场景">
+        <div class="image-overlay-text"><h3>低精力照顾好一盆植物</h3></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="market">
+  <div class="container reveal">
+    <div class="kicker">Market Entry</div>
+    <h2>植间位于真实植物消费和桌面体验消费的交集</h2>
+    <div class="market-intersection">
+      <div class="market-card">
+        <div class="num">2490亿</div>
+        <div class="label">2025 中国花卉零售市场总规模</div>
+        <p class="note">真实植物消费足够广泛，但市场产品原始，客单价低。</p>
+      </div>
+      <div class="intersection-card">
+        <strong>交集机会</strong>
+        <p>真实植物 + 固定桌面 + 养护失败 + 低精力需求</p>
+        <p class="note">这才是植间需要验证的真实入口。</p>
+      </div>
+      <div class="market-card">
+        <h3>桌面体验消费</h3>
+        <ul>
+          <li>摆件、灯具、支架、收纳</li>
+          <li>键鼠外设、书房家具、香薰</li>
+          <li>用户愿意经营长期停留的桌面空间</li>
+        </ul>
+        <p class="note">“桌搭”不是统一统计品类，此处作为付费行为信号。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="scene">
+  <div class="container reveal">
+    <div class="kicker">Desk Scene</div>
+    <h2>用户已经在桌面寻找放松、变化和陪伴</h2>
+    <p class="lead">桌面上已有多种替代物，它们说明需求入口存在。</p>
+    <div class="scene-layout">
+      <div class="image-frame scene">
+        <img src="../../06_素材资源/产品视觉/pic/场景/竞品大全.png" alt="桌面现有替代方案大全">
+      </div>
+      <div class="scene-text-stack">
+        <div class="panel">
+          <h3>已有替代物</h3>
+          <ul>
+            <li>真绿植、假花、桌面摆件</li>
+            <li>屏保绿植、电子桌宠、打卡工具</li>
+            <li>鱼缸、微景观、香薰、毛绒物</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>真植物仍有独特价值</h3>
+          <table class="table compact-table">
+            <tr><th>价值</th><th>感受</th></tr>
+            <tr><td>真实生命</td><td>不是模拟内容，而是真的活着</td></tr>
+            <tr><td>可见变化</td><td>新叶、花苞、开花带来时间感</td></tr>
+            <tr><td>照料结果</td><td>用户会觉得“这是我养出来的”</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">Alternative Gap</div>
+    <h2>现有桌面替代物只解决了一部分需求</h2>
+    <p class="lead">桌面上并不缺“好看”或“可爱”的东西，缺的是能长期低负担存在、长期能被用户看见的东西。</p>
+    <table class="table">
+      <tr><th>替代物</th><th>已解决</th><th>没解决</th></tr>
+      <tr><td>普通绿植</td><td>真实、便宜、容易买</td><td>弱光下成长有限，变化不明显</td></tr>
+      <tr><td>假花/摆件</td><td>好看、稳定、低维护</td><td>没有真实生命和成长变化</td></tr>
+      <tr><td>电子桌宠/屏保</td><td>反馈强、可爱、有陪伴感</td><td>交互智能有限</td></tr>
+      <tr><td>鱼缸/微景观</td><td>生命感强、观赏性强</td><td>维护复杂、风险高、桌面适配难</td></tr>
+      <tr><td>情绪智能花盆</td><td>可爱、互动、传播强</td><td>保活、传感、续航不足，成长有限，智能有限</td></tr>
+      <tr><td>室内种植机</td><td>保活强、种植稳定</td><td>更像专业设备，不够个人桌面化</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">Opportunity Combination</div>
+    <h2>机会在三个价值同时成立</h2>
+    <div class="two-col">
+      <div class="panel">
+        <h3>真实 + 成长 + 低精力</h3>
+        <table class="table compact-table">
+          <tr><th>价值</th><th>用户为什么在意</th></tr>
+          <tr><td>真实</td><td>它是真的活着，不是模拟内容</td></tr>
+          <tr><td>成长</td><td>新叶、花苞、开花带来时间感和成就感</td></tr>
+          <tr><td>低精力</td><td>不增加新的高频待办</td></tr>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>植间要验证的组合假设</h3>
+        <p>目标用户是否真的需要，并愿意为一盆能长期留在固定桌面、不用天天判断养护、还能明显成长开花的植物付费。</p>
+        <p class="viz-note">机会组合，不默认植间方案已成立。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">Scene Conflict</div>
+    <h2>想要桌面开花植物，却被困难阻挡</h2>
+    <div class="visual-layout">
+      <div class="image-frame visual-shot">
+        <img src="../../06_素材资源/产品视觉/pic/场景/植间场景概念图06.png" alt="弱光桌面下植物状态受限的目标用户场景">
+      </div>
+      <table class="table">
+        <tr><th>为什么是开花/成长型植物</th><th>为什么桌面难成立</th></tr>
+        <tr><td>真实生命比桌面摆件更有关系感</td><td>弱光导致营养不足，不开花、徒长或衰弱</td></tr>
+        <tr><td>花苞和开花比普通绿叶更有变化</td><td>用户不想/不会判断浇水、光照、肥料</td></tr>
+        <tr><td>成长变化能形成持续关注</td><td>土表潮湿、虫害、水渍会影响桌面</td></tr>
+        <tr><td>照料结果带来成就感</td><td>维护动作会消耗本就不足的精力</td></tr>
+      </table>
+    </div>
+    <p class="viz-note">低精力系统减轻用户投入，开花植物验证回报“可见成长”是否足以支撑用户付费。</p>
+  </div>
+</section>
+
+<section class="slide" id="task">
+  <div class="container reveal">
+    <div class="kicker">User Jobs</div>
+    <h2>保活是底座，成长和安宁是两条上层价值路径</h2>
+    <div class="path-diagram">
+      <div class="path-canopy">
+        <div class="path-branch growth">
+          <div class="eyebrow">GROWTH PATH</div>
+          <h3>看到植物真的在成长</h3>
+          <p>新叶、花苞、开花、照片时间线，让用户感到“我养的东西在变好”。</p>
+        </div>
+        <div class="path-branch calm">
+          <div class="eyebrow">CALM PATH</div>
+          <h3>获得低注意力的情绪安宁</h3>
+          <p>植物有存在感，但不需要用户持续关注、频繁操作或被设备召唤。</p>
+        </div>
+      </div>
+      <div class="path-stem"></div>
+      <div class="base-block"><strong>共同底座：桌上有真植物，但不再养死、不增加高频待办</strong><span>保活解决体验中断，成长和安宁决定用户是否长期留下。</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">Early Users</div>
+    <h2>面对养护难，用户不同策略</h2>
+    <div class="visual-layout">
+      <div class="image-frame visual-shot"><img src="../../06_素材资源/产品视觉/pic/场景/植间场景概念图05.png" alt="桌面植物养护失败场景"></div>
+      <table class="table compact-table">
+        <tr><th>策略</th><th>可能含义</th><th>机会价值</th></tr>
+        <tr><td>反复尝试</td><td>有需求但缺能力</td><td>主线用户</td></tr>
+        <tr><td>内疚/失败感</td><td>在意这一盆生命</td><td>主线用户</td></tr>
+        <tr><td>选择易养植物</td><td>先满足绿色和省心</td><td>判断是满足，还是妥协</td></tr>
+        <tr><td>直接换新</td><td>消费桌面装饰</td><td>商业侧线</td></tr>
+        <tr><td>无所谓/放弃</td><td>低生命附着</td><td>暂不服务</td></tr>
+        <tr><td>研究原因</td><td>走向专业或 DIY</td><td>非主线</td></tr>
+      </table>
+    </div>
+    <p class="viz-note">植间先找失败后仍想再养、且已为桌面或植物付费的人。</p>
+  </div>
+</section>
+
+<section class="slide" id="user">
+  <div class="container reveal">
+    <div class="kicker">MVP User</div>
+    <h2>优先寻找人群：五个行为条件的交集</h2>
+    <p class="lead">不是“喜欢植物”的人，而是已经尝试过、失败过、仍愿意再试，并且有付费行为的人。</p>
+    <div class="user-layout">
+      <div class="image-frame visual-shot"><img src="../../06_素材资源/产品视觉/pic/场景/植间场景概念图06.png" alt="弱光桌面下植物状态受限的目标用户场景"></div>
+      <div>
+        <div class="user-rings">
+          <div class="user-card"><b>固定桌面</b><span>在办公桌或学习桌长期停留</span></div>
+          <div class="user-card"><b>失败经历</b><span>曾经养死或养坏过桌面植物</span></div>
+          <div class="user-card"><b>仍想再养</b><span>想养一盆会开花的真植物</span></div>
+          <div class="user-card"><b>已经付费</b><span>为桌面绿植或桌搭花过钱</span></div>
+          <div class="user-card"><b>低精力约束</b><span>不想增加高频养护负担</span></div>
+        </div>
+        <div class="user-result">植间 MVP 用户</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">Trust</div>
+    <h2>情绪互动能吸引用户，但不是长期吸引力</h2>
+    <div class="trust-layout">
+      <div class="image-frame visual-shot"><img src="../../06_素材资源/产品视觉/pic/场景/植间场景概念图07.png" alt="智能花盆检测异常导致信任断裂"></div>
+      <div class="trust-stack">
+        <div class="panel">
+          <h3>正向吸引</h3>
+          <ul>
+            <li>陪伴</li>
+            <li>可爱</li>
+            <li>桌面搭子</li>
+            <li>电子宠物</li>
+            <li>绿色养眼</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>信任断裂</h3>
+          <ul>
+            <li>传感器失准</li>
+            <li>检测不到植物</li>
+            <li>续航短、配网失败</li>
+            <li>光照不足、植物死亡</li>
+            <li>伪智能、智商税质疑</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="viz-note">情绪价值需要植物长期价值和设备可靠性支撑。</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">Alternatives · Long Project Desk</div>
+    <h2>学习桌面缺的是可见成长和低负担陪伴</h2>
+    <div class="compare-grid">
+      <div class="image-frame compare-card">
+        <img src="../../06_素材资源/产品视觉/pic/场景/植间场景概念图03.png" alt="博士生桌面上的现有替代方案">
+        <div class="compare-label">现有方案：真实、记录、陪伴分散存在</div>
+      </div>
+      <div class="image-frame compare-card">
+        <img src="../../06_素材资源/产品视觉/pic/场景/植间场景概念图04.png" alt="博士生桌面加入植间后的场景">
+        <div class="compare-label">植间假设：保活、成长、低负担陪伴组合在一盆植物里</div>
+      </div>
+    </div>
+    <p class="viz-note">植间要组合：真实 + 保活 + 成长 + 桌面审美 + 低注意力陪伴，科研人场景。</p>
+  </div>
+</section>
+
+<section class="slide" id="gap">
+  <div class="container reveal">
+    <div class="kicker">Alternatives</div>
+    <h2>职场桌面需要真实生命感和低负担陪伴</h2>
+    <div class="compare-grid">
+      <div class="image-frame compare-card">
+        <img src="../../06_素材资源/产品视觉/pic/场景/植间场景概念图01.png" alt="职场高专注桌面上的现有替代方案">
+        <div class="compare-label">现有方案：好看、反馈、真实、保活分散存在</div>
+      </div>
+      <div class="image-frame compare-card">
+        <img src="../../06_素材资源/产品视觉/pic/场景/植间场景概念图02.png" alt="职场高专注桌面上的植间产品场景">
+        <div class="compare-label">植间假设：真实植物 + 可见成长 + 低精力养护组合在一起</div>
+      </div>
+    </div>
+    <p class="viz-note">植间要组合：真实 + 保活 + 成长 + 桌面审美 + 低注意力陪伴，职场人场景。</p>
+  </div>
+</section>
+
+<section class="slide" id="product">
+  <div class="container reveal">
+    <div class="kicker">Definition</div>
+    <h2>一盆在桌面成长的真实植物系统</h2>
+    <div class="definition-layout">
+      <div class="image-frame product-image">
+        <img src="../../06_素材资源/产品视觉/pic/场景/应用界面02.png" alt="植间产品图">
+      </div>
+      <div class="definition-stack">
+        <div class="definition-card"><div class="word">活着</div><p>补光、底灌、基质、传感降低死亡率。</p></div>
+        <div class="definition-card"><div class="word">变好</div><p>新叶、花苞、开花形成可见成长。</p></div>
+        <div class="definition-card"><div class="word">省心</div><p>自动策略和低频维护降低精力消耗。</p></div>
+        <div class="definition-card"><div class="word">看见</div><p>照片时间线和轻量记录保留变化。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">System</div>
+    <h2>系统方案围绕低精力保活设计</h2>
+    <div class="system-map">
+      <div class="plant-cutaway product-photo"><img src="../../06_素材资源/产品视觉/pic/场景/植间产品概念图29.png" alt="植间产品能力示意图"></div>
+      <div class="module-list">
+        <div class="module-item"><b>保活</b><span>补光灯环 + 潮汐底灌 + 基质包 + 传感 + 水箱</span></div>
+        <div class="module-item"><b>成长</b><span>植物策略 + 照片时间线 + 成长记录</span></div>
+        <div class="module-item"><b>省心</b><span>自动策略 + 低频维护 + 必要提醒</span></div>
+        <div class="module-item"><b>陪伴</b><span>安静存在 + 克制灯光 + 轻量日记</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="mvp">
+  <div class="container reveal">
+    <div class="kicker">Validation Layers</div>
+    <h2>四层次分析</h2>
+    <div class="stage-grid">
+      <div class="stage-card current">
+        <h3>RAT</h3>
+        <p>验证目标用户、痛点和付费意愿。</p>
+        <p>访谈、落地页、价格假门、意向金。</p>
+      </div>
+      <div class="stage-card current">
+        <h3>POC</h3>
+        <p>验证补光、潮汐底灌、基质和传感可行性。</p>
+        <p>先分模块，不追求外观完整。</p>
+      </div>
+      <div class="stage-card">
+        <h3>MVP 样机</h3>
+        <p>少数植物 + 保活系统 + 最小记录。</p>
+        <p>不做社区、屏幕、泛植物识别。</p>
+      </div>
+      <div class="stage-card">
+        <h3>EVT 前置</h3>
+        <p>漏水、噪音、清洁、续航、传感稳定性。</p>
+        <p>不急于开模量产。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">Decision Gates</div>
+    <h2>五步待验证假设</h2>
+    <div class="criteria-grid">
+      <div class="criteria-card"><b>目标用户</b><span>找到 5-8 名必须项全中的高匹配用户。</span></div>
+      <div class="criteria-card"><b>保活</b><span>弱光桌面对照实验中方案组明显更好。</span></div>
+      <div class="criteria-card"><b>低精力</b><span>用户接受维护频率、操作步骤和提醒方式。</span></div>
+      <div class="criteria-card"><b>成长</b><span>用户主动关注新叶、花苞、开花时间线。</span></div>
+      <div class="criteria-card"><b>付费</b><span>已有桌面消费习惯且有桌面种植潜在需求，有询价行为。</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="container reveal">
+    <div class="kicker">Business Hypothesis</div>
+    <h2>先验证硬件购买，耗材和礼品是后续放大</h2>
+    <div class="route">
+      <div class="route-step"><strong>第一闭环</strong><span>用户是否愿为低精力桌面开花真植物系统付费。</span></div>
+      <div class="route-step"><strong>硬件</strong><span>先核算 BOM、装配、物流、售后与渠道成本。</span></div>
+      <div class="route-step"><strong>耗材</strong><span>植物包、基质包、缓释肥等复购只在硬件成立后验证。</span></div>
+      <div class="route-step"><strong>礼品</strong><span>送礼者与使用者双边需求单独验证。</span></div>
+    </div>
+    <p class="viz-note">如果硬件购买不成立，耗材和服务都没有意义。</p>
+  </div>
+</section>
+
+<section class="slide footer-note">
+  <div class="container reveal footer-center">
+    <div class="kicker" style="color: var(--accent);">Next Step</div>
+    <h2>当前只做四件事</h2>
+    <div class="final-actions">
+      <div class="action"><div class="num">01</div><strong>筛目标用户</strong><p>找到 5-8 名高匹配用户。</p></div>
+      <div class="action"><div class="num">02</div><strong>做种植实验</strong><p>验证桌面开花植物保活和成长表现。</p></div>
+      <div class="action"><div class="num">03</div><strong>做用户验证</strong><p>制作低精力维护和成长时间线样稿。</p></div>
+      <div class="action"><div class="num">04</div><strong>做市场验证</strong><p>分析市场、验证需求。</p></div>
+    </div>
+    <p class="lead" style="margin-top: 38px;">先证明一个小人群、一个具体痛点、一个可付费需求。</p>
+  </div>
+</section>
+
+<script>
+const progress = document.getElementById('progress');
+const updateProgress = () => {
+  const height = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = height > 0 ? (window.scrollY / height) * 100 : 0;
+  progress.style.width = pct + '%';
+};
+window.addEventListener('scroll', updateProgress);
+updateProgress();
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.18 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
